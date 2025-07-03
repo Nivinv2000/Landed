@@ -125,7 +125,7 @@ const navigate = useNavigate(); // inside component
 
             <div className="login-content">
               <div className="login-left">
-                <h2>{isLoginMode ? "Welcome Back to" : "Join"} <br />Skillshare</h2>
+                <h2>{isLoginMode ? "Welcome Back to" : "Join"} <br />Landed</h2>
                 <div className="green-line"></div>
                 <p>{isLoginMode ? "Sign in to continue to your account." : "Create an account to get started."}</p>
               </div>
