@@ -1,0 +1,128 @@
+.faq-wrapper {
+  background: #f1f5f9;
+  padding: 80px 20px;
+  margin-top: 10px;
+}
+
+/* Inner Container */
+.faq-container {
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.faq-container h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.faq-subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 30px;
+  font-size: 1rem;
+}
+
+/* FAQ Items */
+.faq-card {
+  background: #f9fafb;
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+  border-left: 4px solid #2563eb;
+}
+
+.faq-card summary {
+  font-weight: 600;
+  font-size: 1.05rem;
+  list-style: none;
+  position: relative;
+}
+
+.faq-card p {
+  margin-top: 10px;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Arrow Icon Handling */
+.faq-card summary::marker,
+.faq-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-card summary::after {
+  content: "➕";
+  position: absolute;
+  right: 0;
+  transition: transform 0.2s ease;
+}
+
+.faq-card[open] summary::after {
+  content: "➖";
+}
+
+/* CTA Button */
+.faq-button {
+  text-align: center;
+  margin-top: 40px;
+}
+.button-container {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.primary-btn {
+  background-color: #2563eb; /* Tailwind's blue-600 */
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.faq-wrapper {
+  padding: 40px 0;
+  background: #f9f9f9;
+}
+.faq-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.faq-card {
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 0 16px;
+}
+.faq-card summary {
+  font-weight: 600;
+  cursor: pointer;
+  padding: 16px 0;
+}
+.faq-card[open] summary {
+  color: #007bff;
+}
+.faq-button .btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 24px;
+}
