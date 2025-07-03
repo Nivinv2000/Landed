@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.a036d1d5.css",
-    "main.js": "/static/js/main.24303f1e.js",
-    "static/js/453.7099c270.chunk.js": "/static/js/453.7099c270.chunk.js",
-    "index.html": "/index.html",
-    "main.a036d1d5.css.map": "/static/css/main.a036d1d5.css.map",
-    "main.24303f1e.js.map": "/static/js/main.24303f1e.js.map",
-    "453.7099c270.chunk.js.map": "/static/js/453.7099c270.chunk.js.map"
+    "main.css": "/Nivinv2000/Landed.git/static/css/main.a036d1d5.css",
+    "main.js": "/Nivinv2000/Landed.git/static/js/main.0101eafd.js",
+    "static/js/453.7099c270.chunk.js": "/Nivinv2000/Landed.git/static/js/453.7099c270.chunk.js",
+    "index.html": "/Nivinv2000/Landed.git/index.html",
+    "main.a036d1d5.css.map": "/Nivinv2000/Landed.git/static/css/main.a036d1d5.css.map",
+    "main.0101eafd.js.map": "/Nivinv2000/Landed.git/static/js/main.0101eafd.js.map",
+    "453.7099c270.chunk.js.map": "/Nivinv2000/Landed.git/static/js/453.7099c270.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a036d1d5.css",
-    "static/js/main.24303f1e.js"
+    "static/js/main.0101eafd.js"
   ]
 }
