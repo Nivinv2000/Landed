@@ -31,11 +31,16 @@
   margin-bottom: 10px;
 }
 
+.social-icons {
+  display: flex;
+  gap: 14px;
+}
+
 .social-icons a {
-  margin-right: 10px;
-  font-size: 20px;
+  font-size: 22px;
   color: #333;
-  text-decoration: none;
+  transition: color 0.3s;
+  margin-right: 0;
 }
 
 .footer-subscribe .subscribe-form {
@@ -72,12 +77,6 @@ hr {
   margin-top: 30px;
   border: none;
   border-top: 1px solid #eee;
-}
-.social-icons a {
-  margin-right: 0px;
-  font-size: 22px;
-  color: #333;
-  transition: color 0.3s;
 }
 
 .social-icons a:hover {
