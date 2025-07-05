@@ -69,11 +69,46 @@
   content: "➖";
 }
 
+/* FAQ animation and style (same as LandingPage) */
+
+.animated-faq {
+  border-radius: 10px;
+  margin-bottom: 16px;
+  background: #f8f9fa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 0 20px;
+  transition: box-shadow 0.3s;
+}
+
+.animated-faq.open {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.faq-question {
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 18px 0 10px 0;
+  color: #1a237e;
+}
+
+.faq-answer-wrapper {
+  overflow: hidden;
+  will-change: max-height, opacity;
+}
+
+.faq-answer {
+  margin: 0 0 18px 0;
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
 /* CTA Button */
 .faq-button {
   text-align: center;
   margin-top: 40px;
 }
+
 .button-container {
   display: flex;
   gap: 12px;
@@ -93,36 +128,20 @@
 }
 
 .faq-wrapper {
-  padding: 40px 0;
-  background: #f9f9f9;
+  padding: 40px 0 60px 0;
 }
+
 .faq-container {
   max-width: 700px;
   margin: 0 auto;
-  padding: 20px;
-}
-.faq-card {
   background: #fff;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  padding: 0 16px;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  padding: 32px 24px 24px 24px;
 }
-.faq-card summary {
-  font-weight: 600;
-  cursor: pointer;
-  padding: 16px 0;
-}
-.faq-card[open] summary {
-  color: #007bff;
-}
-.faq-button .btn {
-  background: #007bff;
-  color: #fff;
-  border: none;
-  padding: 12px 32px;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 24px;
+
+.faq-subtitle {
+  color: #555;
+  margin-bottom: 24px;
+  font-size: 1.05rem;
 }
