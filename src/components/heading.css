@@ -67,6 +67,12 @@ header .text-blue {
   width: 100%;
 }
 
+.nav-links .active {
+  border-bottom: 3px solid #2563eb; /* Green underline */
+  /* color: #2ecc40; */
+  font-weight: bold;
+}
+
 /* Button */
 .btn {
   background-color: #2563eb;
