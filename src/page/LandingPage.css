@@ -504,5 +504,34 @@ input[type="email"]:focus {
   opacity: 1;
 }
 
+/* Animated FAQ Styles */
+.animated-faq {
+  border-radius: 10px;
+  margin-bottom: 16px;
+  background: #f8f9fa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 0 20px;
+  transition: box-shadow 0.3s;
+}
+.animated-faq.open {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.faq-question {
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 18px 0 10px 0;
+  color: #1a237e;
+}
+.faq-answer-wrapper {
+  overflow: hidden;
+  will-change: max-height, opacity;
+}
+.faq-answer {
+  margin: 0 0 18px 0;
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
 
 
