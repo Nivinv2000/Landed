@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import "./heading.css";
-import { useNavigate  } from "react-router-dom"; // at the top
+import { useNavigate, useLocation } from "react-router-dom"; // updated import
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
 import {
@@ -23,7 +23,8 @@ export default function Heading() {
     password: ""
   });
 
-const navigate = useNavigate(); // inside component
+const navigate = useNavigate();
+const location = useLocation(); // get current path
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -88,11 +89,11 @@ const navigate = useNavigate(); // inside component
       </div>
 
       <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
-        <a href="/">Home</a>
-        <a href="/mentors">Mentors</a>
-        <a href="/cohorts">Cohorts</a>
-        <a href="/contat">About</a>
-        <a href="/Faq">FAQ</a>
+        <Link to="/" className={location.pathname === "/" ? "active" : ""}>Home</Link>
+        <Link to="/mentors" className={location.pathname === "/mentors" ? "active" : ""}>Mentors</Link>
+        <Link to="/cohorts" className={location.pathname === "/cohorts" ? "active" : ""}>Cohorts</Link>
+        <Link to="/contat" className={location.pathname === "/contat" ? "active" : ""}>About</Link>
+        <Link to="/Faq" className={location.pathname === "/Faq" ? "active" : ""}>FAQ</Link>
 
 
         {isLoggedIn && (
