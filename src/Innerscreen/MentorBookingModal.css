@@ -243,3 +243,88 @@
     transform: translateY(0);
   }
 }
+/* Default layout (desktop) */
+.slot-layout {
+  display: flex;
+  gap: 2rem;
+  padding: 20px;
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .slot-layout {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .slot-left,
+  .slot-right {
+    width: 100%;
+  }
+
+  .slot-left img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .slot-left h3,
+  .slot-left p,
+  .slot-left h4 {
+    text-align: center;
+    margin: 5px 0;
+  }
+
+  .slot-right h4 {
+    margin-top: 20px;
+  }
+
+  .time-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .time-slot {
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+
+  .time-slot.selected {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .proceed-button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .session-card.selected {
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-left: 4px solid #007bff;
+    margin-bottom: 20px;
+  }
+
+  .session-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+}
