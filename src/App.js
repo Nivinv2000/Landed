@@ -13,7 +13,9 @@ import MentorProfile from "./Innerscreen/MentorProfile";
 import CohortDetailsPage from "./Innerscreen/CohortDetailsPage";
 import ProfilePage from "./page/ProfilePage";
 import Faq from "./page/Faq";
-
+import SuccessPage from "./page/success";
+import CancelPage from "./page/cancel";
+import ProblemPage from "./page/problem";
 
 function App() {
   return (
@@ -32,6 +34,9 @@ function App() {
         <Route path="/CohortDetailsPage" element={<CohortDetailsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/Faq" element={<Faq />} />
+        <Route path="/success" element={<SuccessPage />} />
+        <Route path="/cancel" element={<CancelPage />} />
+        <Route path="/problem" element={<ProblemPage />} />
 
 
 
