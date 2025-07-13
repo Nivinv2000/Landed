@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { auth, db } from "../firebase";
+import { auth, db, storage } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import {
   doc,
@@ -10,6 +10,11 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 import "./ProfilePage.css";
 import Heading from "../components/heading";
 import Footer from "../components/footer";
@@ -18,7 +23,10 @@ import { signOut } from "firebase/auth";
 export default function ProfilePage() {
   const user = auth.currentUser;
   const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
 
   const [mentorDetails, setMentorDetails] = useState({
     phone: "",
@@ -30,21 +38,16 @@ export default function ProfilePage() {
     availability: "",
     linkedin: "",
     bio: "",
-    jobTitle: "",
-    company: "",
     university: "",
     fieldsHelp: [],
-    shortBio: "",
     whyMentor: "",
-    calLink: "",
     sessionPrice: "",
-    consent: false,
+    calLink: "",
+    imageUrl: "",
   });
 
   const [activeTab, setActiveTab] = useState("profile");
   const [mentorSchedules, setMentorSchedules] = useState([]);
-  const [editingSession, setEditingSession] = useState(null);
-  const [editSessionData, setEditSessionData] = useState({});
 
   const handleLogout = async () => {
     try {
@@ -62,7 +65,9 @@ export default function ProfilePage() {
       try {
         const docRef = doc(db, "mentors", user.uid);
         const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) setMentorDetails(docSnap.data());
+        if (docSnap.exists()) {
+          setMentorDetails(docSnap.data());
+        }
 
         const q = query(
           collection(db, "mentors_section"),
@@ -92,62 +97,35 @@ export default function ProfilePage() {
     e.preventDefault();
     if (!user) return;
 
+    setIsUploading(true);
+
     try {
+      let imageUrl = mentorDetails.imageUrl || "";
+
+      if (profileImage) {
+        const imageRef = ref(storage, `mentor_profiles/${user.uid}`);
+        await uploadBytes(imageRef, profileImage);
+        imageUrl = await getDownloadURL(imageRef);
+      }
+
       const docRef = doc(db, "mentors", user.uid);
       await setDoc(docRef, {
         uid: user.uid,
         email: user.email,
         name: user.displayName || "",
         ...mentorDetails,
+        imageUrl,
         updatedAt: new Date(),
       });
+
+      setMentorDetails((prev) => ({ ...prev, imageUrl }));
       alert("Mentor profile saved successfully!");
     } catch (error) {
       console.error("Error updating mentor data:", error);
       alert("Error updating profile.");
+    } finally {
+      setIsUploading(false);
     }
-  };
-
-  const handleEditSession = (session) => {
-    setEditingSession(session.id);
-    setEditSessionData({ ...session });
-  };
-
-  const handleEditSessionChange = (e) => {
-    setEditSessionData({
-      ...editSessionData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleEditSessionSubmit = async (e) => {
-    e.preventDefault();
-    if (!user || !editingSession) return;
-    try {
-      const docRef = doc(db, "mentors_section", editingSession);
-      await setDoc(docRef, { ...editSessionData }, { merge: true });
-
-      const q = query(
-        collection(db, "mentors_section"),
-        where("createdBy", "==", user.uid)
-      );
-      const snap = await getDocs(q);
-      const scheduleData = snap.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setMentorSchedules(scheduleData);
-      setEditingSession(null);
-      alert("Session updated successfully!");
-    } catch (error) {
-      console.error("Error updating session:", error);
-      alert("Error updating session.");
-    }
-  };
-
-  const handleCancelEdit = () => {
-    setEditingSession(null);
-    setEditSessionData({});
   };
 
   if (!user) {
@@ -201,6 +179,19 @@ export default function ProfilePage() {
               <p>
                 <strong>Email:</strong> {user.email}
               </p>
+              {mentorDetails.imageUrl && (
+                <img
+                  src={mentorDetails.imageUrl}
+                  alt="Profile"
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    marginTop: "10px",
+                  }}
+                />
+              )}
             </div>
 
             <form className="mentor-form" onSubmit={handleSubmit}>
@@ -210,12 +201,20 @@ export default function ProfilePage() {
                   : "Add Mentor Information"}
               </h2>
 
+              <label>Upload Profile Image:</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setProfileImage(e.target.files[0])}
+              />
+
               <input
                 type="text"
                 name="phone"
                 placeholder="Phone Number"
                 value={mentorDetails.phone}
                 onChange={handleInputChange}
+                required
               />
               <input
                 type="text"
@@ -223,6 +222,7 @@ export default function ProfilePage() {
                 placeholder="Location"
                 value={mentorDetails.location}
                 onChange={handleInputChange}
+                required
               />
               <input
                 type="text"
@@ -230,20 +230,23 @@ export default function ProfilePage() {
                 placeholder="Specialization"
                 value={mentorDetails.specialization}
                 onChange={handleInputChange}
+                required
               />
               <input
                 type="text"
                 name="experience"
-                placeholder="Experience"
+                placeholder="Years of Experience"
                 value={mentorDetails.experience}
                 onChange={handleInputChange}
+                required
               />
               <input
                 type="text"
                 name="qualification"
-                placeholder="Qualification"
+                placeholder="Highest Qualification"
                 value={mentorDetails.qualification}
                 onChange={handleInputChange}
+                required
               />
               <input
                 type="text"
@@ -251,90 +254,113 @@ export default function ProfilePage() {
                 placeholder="Current Company"
                 value={mentorDetails.currentCompany}
                 onChange={handleInputChange}
+                required
               />
               <input
-                type="text"
+                type="number"
                 name="availability"
-                placeholder="Availability"
+                placeholder="Availability (Hours/week)"
                 value={mentorDetails.availability}
                 onChange={handleInputChange}
+                required
               />
               <input
-                type="text"
+                type="url"
                 name="linkedin"
-                placeholder="LinkedIn URL"
+                placeholder="LinkedIn Profile URL"
                 value={mentorDetails.linkedin}
                 onChange={handleInputChange}
+                required
               />
               <textarea
                 name="bio"
-                placeholder="Bio"
+                placeholder="Brief Bio"
+                rows="4"
                 value={mentorDetails.bio}
                 onChange={handleInputChange}
+                required
+              ></textarea>
+
+              <input
+                type="text"
+                name="university"
+                placeholder="University & Degree"
+                value={mentorDetails.university}
+                onChange={handleInputChange}
+                required
               />
 
-              <button type="submit" className="submit-btn">
-                {mentorDetails.phone ? "Update Profile" : "Submit"}
+              <label>Fields You Can Help With:</label>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {[
+                  "University/course selection",
+                  "Job/internship applications",
+                  "CV/LinkedIn review",
+                  "Visa or immigration process",
+                  "Prep help",
+                  "Industry insights",
+                ].map((field) => (
+                  <label key={field}>
+                    <input
+                      type="checkbox"
+                      checked={mentorDetails.fieldsHelp.includes(field)}
+                      onChange={(e) => {
+                        const updated = e.target.checked
+                          ? [...mentorDetails.fieldsHelp, field]
+                          : mentorDetails.fieldsHelp.filter((f) => f !== field);
+                        setMentorDetails({
+                          ...mentorDetails,
+                          fieldsHelp: updated,
+                        });
+                      }}
+                    />
+                    {field}
+                  </label>
+                ))}
+              </div>
+
+              <textarea
+                name="whyMentor"
+                placeholder="Why do you mentor? (100–200 words)"
+                value={mentorDetails.whyMentor}
+                onChange={handleInputChange}
+                rows="4"
+                required
+              ></textarea>
+
+              <input
+                type="url"
+                name="calLink"
+                placeholder="Your Cal.com Link"
+                value={mentorDetails.calLink}
+                onChange={handleInputChange}
+                required
+              />
+
+              <input
+                type="number"
+                name="sessionPrice"
+                placeholder="Session Price (in GBP)"
+                value={mentorDetails.sessionPrice}
+                onChange={handleInputChange}
+                required
+              />
+
+              <button type="submit" className="submit-btn" disabled={isUploading}>
+                {isUploading ? <div className="spinner"></div> : mentorDetails.phone ? "Update Profile" : "Submit Details"}
               </button>
             </form>
-
-            {/* ✅ Display Signup Form Data */}
-            <div className="profile-extra">
-              <h2>Signup Details</h2>
-              <p>
-                <strong>Job Title:</strong> {mentorDetails.jobTitle || "N/A"}
-              </p>
-              <p>
-                <strong>Company:</strong> {mentorDetails.company || "N/A"}
-              </p>
-              <p>
-                <strong>University:</strong> {mentorDetails.university || "N/A"}
-              </p>
-              <p>
-                <strong>Fields You Can Help With:</strong>{" "}
-                {mentorDetails.fieldsHelp?.join(", ") || "N/A"}
-              </p>
-              <p>
-                <strong>Short Bio:</strong>{" "}
-                {mentorDetails.shortBio || "N/A"}
-              </p>
-              <p>
-                <strong>Why Mentor:</strong>{" "}
-                {mentorDetails.whyMentor || "N/A"}
-              </p>
-              <p>
-                <strong>Calendly Link:</strong>{" "}
-                {mentorDetails.calLink ? (
-                  <a
-                    href={mentorDetails.calLink}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {mentorDetails.calLink}
-                  </a>
-                ) : (
-                  "N/A"
-                )}
-              </p>
-              <p>
-                <strong>Session Price:</strong> £
-                {mentorDetails.sessionPrice || "N/A"}
-              </p>
-            </div>
           </>
         )}
 
-        {/* Leave Schedule Tab as-is */}
         {activeTab === "schedule" && (
           <div className="schedule-tab">
             <h2>Scheduled Sessions</h2>
             {mentorSchedules.length === 0 ? (
-              <p>No sessions yet.</p>
+              <p>No sessions scheduled yet.</p>
             ) : (
-              <ul>
-                {mentorSchedules.map((s) => (
-                  <li key={s.id}>{s.name}</li>
-                ))}
+              <ul className="schedule-list">
+                {/* You can populate this with schedule info */}
               </ul>
             )}
           </div>
