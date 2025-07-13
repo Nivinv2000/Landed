@@ -31,7 +31,7 @@ export default function ProfilePage() {
     fieldsHelp: [],
     bio: "",
     whyMentor: "",
-    calLink: "",
+    // calLink: "",
     sessionPrice: "",
     imageUrl: ""
   });
@@ -147,7 +147,7 @@ export default function ProfilePage() {
           <textarea name="bio" placeholder="Short Bio (100–200 words)" rows="4" value={mentorDetails.bio} onChange={handleInputChange} required></textarea>
           <textarea name="whyMentor" placeholder="Why do you mentor? (100–200 words)" rows="4" value={mentorDetails.whyMentor} onChange={handleInputChange} required></textarea>
 
-          <input type="url" name="calLink" placeholder="Cal.com Booking Link" value={mentorDetails.calLink} onChange={handleInputChange} required />
+          // <input type="url" name="calLink" placeholder="Cal.com Booking Link" value={mentorDetails.calLink} onChange={handleInputChange} required />
           <input type="number" name="sessionPrice" placeholder="Your Session Price (GBP)" value={mentorDetails.sessionPrice} onChange={handleInputChange} required />
 
           <button type="submit" className="submit-btn" disabled={isUploading}>
