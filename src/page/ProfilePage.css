@@ -265,4 +265,15 @@
   background: #e0e7ff;
   color: #3730a3;
 }
+.profile-extra {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f3f4f6;
+  border-radius: 10px;
+  line-height: 1.6;
+}
+.profile-extra h2 {
+  margin-bottom: 15px;
+}
+
 
