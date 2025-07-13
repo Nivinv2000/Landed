@@ -66,7 +66,13 @@ export default function ProfilePage() {
         const docRef = doc(db, "mentors", user.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setMentorDetails(docSnap.data());
+          const data = docSnap.data();
+          setMentorDetails({
+            ...mentorDetails,
+            ...data,
+            fieldsHelp: Array.isArray(data.fieldsHelp) ? data.fieldsHelp : [], // Ensure it's an array
+          });
+
         }
 
         const q = query(
