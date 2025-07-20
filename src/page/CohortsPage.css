@@ -1,0 +1,325 @@
+.cohorts-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #1e40af;
+  margin-bottom: 30px;
+}
+
+.cohort-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.cohort-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.cohort-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.status-badge {
+  background-color: #d1fae5;
+  color: #059669;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.member-count {
+  font-size: 14px;
+  color: #999;
+}
+
+.mentor-info {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.mentor-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #eee;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.mentor-name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.mentor-role {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+.cohort-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 16px 0 4px;
+  color: #111827;
+}
+
+.cohort-description {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.cohort-dates {
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 12px;
+}
+
+.cohort-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.tag {
+  background-color: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: #1e3a8a;
+  font-weight: 500;
+}
+
+.view-button {
+  background-color: #2563eb;
+  color: white;
+  padding: 10px 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+.view-button:hover {
+  background-color: #1e40af;
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .cohort-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .cohort-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cohorts-containern {
+  text-align: center;
+  padding: 20px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cohorts-title {
+  font-size: 2.95rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: black;
+}
+
+.cohorts-subtitle {
+  font-size: 20px;
+  color: #555;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+.cohorts-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #444;
+}
+
+.stat-icon {
+  color: #2563eb;
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.stat span strong {
+  color: #2563eb;
+  margin-right: 4px;
+}
+
+
+
+.active-cohort-wrapper {
+  padding: 40px;
+  background-color: #f9fafb;
+  font-family: 'Inter', sans-serif;
+}
+
+.active-cohort-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.active-cohort-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.active-cohort-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-top: 8px;
+}
+
+.active-cohort-viewall {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.active-cohort-empty {
+  text-align: center;
+  color: #555;
+}
+
+.active-cohort-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.active-cohort-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  position: relative;
+}
+
+.active-cohort-status {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+}
+
+.active-cohort-status.active {
+  background-color: #34d399;
+}
+
+.active-cohort-status.upcoming {
+  background-color: #60a5fa;
+}
+
+.active-cohort-mentor {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.active-cohort-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #eee;
+  margin-right: 12px;
+}
+
+.active-cohort-role {
+  font-size: 13px;
+  color: #666;
+}
+
+.active-cohort-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 16px 0 8px;
+}
+
+.active-cohort-description {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 12px;
+}
+
+.active-cohort-date {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.active-cohort-tags {
+  margin-bottom: 16px;
+}
+
+.active-cohort-tag {
+  background-color: #f3f4f6;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-right: 6px;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.active-cohort-button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 12px;
+}

@@ -1,0 +1,631 @@
+.mentor-section {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: #f9fafb;
+}
+
+.mentor-subtitle {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+/* Grid Layout for Cards */
+.mentor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  gap: 24px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+.mentor-card {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  width: 100%;
+  max-width: 350px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.mentor-card:hover {
+  transform: translateY(-5px);
+  border: 2px solid #2563eb;
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
+}
+
+.mentor-card img {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.mentor-role {
+  color: #333;
+  font-weight: 500;
+}
+
+.mentor-univ {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.mentor-price {
+  color: #2563eb;
+  font-weight: bold;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 10px;
+}
+.search-container {
+  margin: 0 auto 30px;
+  max-width: 400px;
+  width: 100%;
+}
+
+
+.search-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.search-container input[type="text"]::placeholder {
+  color: #aaa;
+  transition: color 0.3s ease;
+}
+
+.search-container input[type="text"]:focus::placeholder {
+  color: transparent;
+}
+.search-container input[type="text"]:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+.mentor-container {
+  padding: 40px 40px;
+  /* max-width: 900px; */
+  margin: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.mentor-titles {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: left;
+  color: #111;
+}
+
+.mentor-subtitles {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 25px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+
+.mentor-search {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.mentor-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.filter-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #222;
+}
+
+.filter-button {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #333;
+  transition: background-color 0.2s ease;
+}
+
+.filter-button:hover {
+  background-color: #f2f2f2;
+}
+
+.mentor-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+.btn.outline {
+  background-color: white;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+  width: 100%;
+}
+
+.btn.outline:hover {
+  background-color: #f0f4ff;
+}
+
+.btn.solid {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  width: 100%;
+}
+
+.btn.solid:hover {
+  background-color: #1d4ed8;
+}
+/* Modal Overlay */
+.mentor-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Modal Box */
+.mentor-modal {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 700px;
+  width: 100%;
+  padding: 30px;
+  position: relative;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Close Button */
+.close-button {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #555;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Modal Header */
+.mentor-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.mentor-modal-header img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #f3f3f3;
+}
+
+.mentor-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.mentor-modal-header p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+/* Sessions Section */
+.mentor-session-info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+/* Session Card Grid */
+.session-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+
+@media (max-width: 1024px) {
+  .session-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .session-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Individual Session Card */
+.session-card {
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  transition: box-shadow 0.2s;
+}
+
+.session-card:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.session-card h4 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.session-card p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.session-details {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.session-book {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #1e40af;
+  background: white;
+  color: #1e40af;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.session-book:hover {
+  background: #1e40af;
+  color: white;
+}
+
+
+
+/* ---------------------------- */
+/* 🌐 Responsive Adjustments */
+/* ---------------------------- */
+
+/* Overall container adjustments for mobile */
+@media (max-width: 768px) {
+  .mentor-container {
+    padding: 20px 16px;
+  }
+
+  .mentor-grid {
+    grid-template-columns: 1fr; /* Stack cards on small screens */
+    gap: 16px;
+  }
+
+  .mentor-titles {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .mentor-subtitles {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .mentor-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .mentor-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-container {
+    max-width: 100%;
+  }
+
+  .mentor-search {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .btn.outline,
+  .btn.solid {
+    font-size: 0.95rem;
+    padding: 10px 14px;
+  }
+
+  .mentor-modal {
+    padding: 20px;
+    max-width: 95vw;
+  }
+
+  .close-button {
+    top: 8px;
+    right: 12px;
+  }
+
+  .mentor-modal-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .mentor-modal-header img {
+    width: 72px;
+    height: 72px;
+  }
+
+  .session-card {
+    padding: 16px;
+  }
+
+  .session-book {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .mentor-section {
+    padding: 30px 16px;
+  }
+
+  .mentor-modal-overlay {
+    padding: 10px;
+  }
+}
+
+/* Smaller phones */
+@media (max-width: 480px) {
+  .mentor-titles {
+    font-size: 1.4rem;
+  }
+
+  .mentor-subtitles {
+    font-size: 0.85rem;
+  }
+
+  .session-card h4 {
+    font-size: 0.95rem;
+  }
+
+  .session-card p {
+    font-size: 0.85rem;
+  }
+
+  .mentor-price {
+    font-size: 1rem;
+  }
+
+  .mentor-card {
+    padding: 14px;
+  }
+
+  .mentor-card img {
+    width: 72px;
+    height: 72px;
+  }
+
+  .search-container input[type="text"] {
+    font-size: 0.95rem;
+    padding: 8px;
+  }
+}
+.mentor-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.mentor-filter-dropdown,
+.mentor-filter-input {
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  background-color: white;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.mentor-filter-dropdown:focus,
+.mentor-filter-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.5s ease forwards;
+  /* opacity: 0; ensure animation starts hidden */
+}
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mentor-modal {
+  animation: slideFadeIn 0.4s ease;
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.btn.solid:hover,
+.session-book:hover {
+  animation: pulse 0.5s ease;
+}
+.mentor-card img {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.mentor-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease, background-color 0.3s ease;
+}
+
+.mentor-card:hover {
+  transform: translateY(-6px);
+  background-color: #f0f7ff;
+}
+.mentor-filter-input:focus {
+  transform: scale(1.02);
+  transition: transform 0.2s ease;
+}
+
+
+/* 1. Breathing Effect for Inputs */
+@keyframes breathing {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 12px 4px rgba(37, 99, 235, 0.2);
+  }
+}
+
+.mentor-filter-input,
+.mentor-filter-dropdown {
+  animation: breathing 4s ease-in-out infinite;
+}
+
+/* 2. Glowing Card Effect */
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.2);
+  }
+}
+
+.mentor-card:hover {
+  animation: glow 3s ease-in-out infinite;
+}
+
+/* 3. Shimmering Title */
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.mentor-titles {
+  background: linear-gradient(to right, #2563eb 10%, #3b82f6 50%, #2563eb 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+  background-size: 300% auto;
+}
+
+/* 4. Floating Animation for Mentor Cards */
+@keyframes floatLoop {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0px); }
+}
+
+.mentor-card {
+  animation: floatLoop 6s ease-in-out infinite;
+}
+
+/* 5. Subtle Gradient Background Motion (Optional for Container) */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.mentor-section {
+  background: linear-gradient(270deg, #f9fafb, #e0f2fe, #f9fafb);
+  background-size: 600% 600%;
+  animation: gradientShift 30s ease infinite;
+}
+
+.mentor-card {
+  transition: transform 0.3s ease;
+}
+
+.mentor-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.session-card {
+  transition: box-shadow 0.3s ease;
+}
