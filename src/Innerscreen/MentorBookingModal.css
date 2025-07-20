@@ -1,0 +1,330 @@
+/* Overlay */
+.mentor-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Modal Box */
+.mentor-modal {
+  background: #fff;
+  border-radius: 16px;
+  width: 95%;
+  max-width: 900px;
+  padding: 30px;
+  position: relative;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Close Button */
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 24px;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #555;
+}
+
+/* Step 1 Layout */
+.slot-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+/* Left Panel */
+.slot-left {
+  flex: 1;
+  border-right: 1px solid #eee;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slot-left img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.slot-left h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: #111;
+}
+
+.slot-left p {
+  font-size: 0.95rem;
+  color: #444;
+  text-align: center;
+}
+
+.slot-left h4 {
+  margin-top: 20px;
+  font-size: 1.1rem;
+  color: #000;
+}
+
+/* Right Panel */
+.slot-right {
+  flex: 2;
+  padding-left: 10px;
+}
+
+.slot-right h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Calendar override */
+.react-calendar {
+  width: 100%;
+  border: none;
+  font-family: inherit;
+  margin-bottom: 20px;
+}
+
+/* Time Slot Buttons */
+.time-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.time-slot {
+  padding: 10px 20px;
+  border: 1px solid #1e40af;
+  border-radius: 8px;
+  background: #f0f7ff;
+  color: #1e40af;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.time-slot.selected,
+.time-slot:hover {
+  background-color: #1e40af;
+  color: white;
+}
+
+/* Next Button */
+.proceed-button {
+  margin-top: 20px;
+  background-color: #1e40af;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Step 2 Form */
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.booking-form h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #1e293b;
+  text-align: center;
+}
+
+.booking-form input,
+.booking-form textarea {
+  padding: 14px 16px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+  background-color: #f9fafb;
+}
+
+.booking-form input:focus,
+.booking-form textarea:focus {
+  border-color: #1e40af;
+  background-color: #fff;
+}
+
+.booking-form textarea {
+  resize: vertical;
+  height: 120px;
+}
+
+/* Terms */
+.terms {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.4;
+}
+
+/* Continue Button */
+.continue-button {
+  margin-top: 10px;
+  background-color: #1e40af;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.continue-button:hover {
+  background-color: #1c3aa9;
+}
+
+.continue-button:disabled {
+  background-color: #cbd5e1;
+  cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .booking-form {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .continue-button {
+    padding: 12px;
+  }
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Default layout (desktop) */
+.slot-layout {
+  display: flex;
+  gap: 2rem;
+  padding: 20px;
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .slot-layout {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .slot-left,
+  .slot-right {
+    width: 100%;
+  }
+
+  .slot-left img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .slot-left h3,
+  .slot-left p,
+  .slot-left h4 {
+    text-align: center;
+    margin: 5px 0;
+  }
+
+  .slot-right h4 {
+    margin-top: 20px;
+  }
+
+  .time-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .time-slot {
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+
+  .time-slot.selected {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .proceed-button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .session-card.selected {
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-left: 4px solid #007bff;
+    margin-bottom: 20px;
+  }
+
+  .session-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+}
