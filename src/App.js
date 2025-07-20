@@ -16,6 +16,7 @@ import Faq from "./page/Faq";
 import SuccessPage from "./page/success";
 import CancelPage from "./page/cancel";
 import ProblemPage from "./page/problem";
+import CommunityPage from "./page/CommunityPage";
 
 function App() {
   return (
@@ -37,6 +38,8 @@ function App() {
         <Route path="/success" element={<SuccessPage />} />
         <Route path="/cancel" element={<CancelPage />} />
         <Route path="/problem" element={<ProblemPage />} />
+        <Route path="/CommunityPage" element={<CommunityPage />} />
+
 
 
 
