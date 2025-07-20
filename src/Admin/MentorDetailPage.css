@@ -1,0 +1,17 @@
+.form-box {
+  max-width: 800px;
+  margin: 50px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  color: #1f2937;
+}
+
+.session-slot {
+  background-color: #f3f4f6;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 12px;
+  border-left: 4px solid #2563eb;
+}
