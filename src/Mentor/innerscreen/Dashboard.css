@@ -1,0 +1,126 @@
+.dashboard-wrapper {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.dashboard-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #7f8c8d;
+}
+
+.dashboard-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  flex: 1;
+  min-width: 250px;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #2980b9;
+}
+
+.card p {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.dashboard-section {
+  margin-top: 40px;
+}
+
+.dashboard-section h3 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #34495e;
+  border-left: 4px solid #3498db;
+  padding-left: 10px;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #ecf0f1;
+  text-align: left;
+}
+
+.dashboard-table th {
+  background-color: #3498db;
+  color: white;
+  font-weight: 600;
+}
+
+.dashboard-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.quick-actions {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.quick-actions li {
+  margin-bottom: 10px;
+}
+
+.quick-actions a {
+  text-decoration: none;
+  color: #2980b9;
+  font-weight: 500;
+  font-size: 1.05rem;
+  transition: color 0.2s ease;
+}
+
+.quick-actions a:hover {
+  color: #1abc9c;
+}
+
+@media (max-width: 768px) {
+  .dashboard-cards {
+    flex-direction: column;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .dashboard-wrapper {
+    padding: 20px 10px;
+  }
+}

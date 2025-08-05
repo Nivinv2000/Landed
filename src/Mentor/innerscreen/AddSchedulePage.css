@@ -1,0 +1,218 @@
+.schedule-page {
+  padding: 40px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f2f5f9;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #333;
+}
+
+.add-section-btn {
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.add-section-btn:hover {
+  background: linear-gradient(to right, #5a67d8, #6b46c1);
+}
+
+.subheading {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.session-block {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-left: 6px solid #4690c1;
+  transition: transform 0.2s ease;
+}
+
+.session-block:hover {
+  transform: translateY(-4px);
+}
+
+.session-title {
+  font-size: 22px;
+  color: #2d3748;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 6px;
+}
+
+.session-slot-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.session-card {
+  background: #f9fafc;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.session-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.session-name {
+  font-size: 18px;
+  color: #4a5568;
+  margin-bottom: 10px;
+}
+
+.label {
+  font-weight: 600;
+  color: #718096;
+  margin-right: 4px;
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(17, 17, 17, 0.4);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 16px;
+  width: 95%;
+  max-width: 650px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s ease;
+}
+
+.close-modal:hover {
+  color: #444;
+}
+
+.schedule-form input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid #d4d4d4;
+  background-color: #fefefe;
+  font-size: 16px;
+  transition: border 0.2s ease;
+}
+
+.schedule-form input:focus {
+  outline: none;
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+}
+
+.slot-group {
+  margin-bottom: 25px;
+  padding: 18px;
+  background: #f6f8fb;
+  border-left: 4px solid #667eea;
+  border-radius: 10px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.add-slot-btn,
+.submit-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  margin-right: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-slot-btn {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.add-slot-btn:hover {
+  background-color: #138496;
+}
+
+.submit-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.submit-btn:hover {
+  background-color: #218838;
+}
+.modal-content {
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 16px;
+  width: 95%;
+  max-width: 650px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+
+  /* 🔽 Add these lines for scroll support */
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
