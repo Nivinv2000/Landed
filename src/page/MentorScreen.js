@@ -28,7 +28,6 @@ export default function MentorScreen() {
         const querySnapshot = await getDocs(collection(db, "mentors_section"));
         const mentorList = querySnapshot.docs
           .map(doc => ({ id: doc.id, ...doc.data() }))
-          .filter(mentor => mentor.status === "accepted");
         setMentors(mentorList);
       } catch (error) {
         console.error("Error fetching mentors:", error);
@@ -136,7 +135,7 @@ export default function MentorScreen() {
               <p className="mentor-role"><FaUserGraduate /> {mentor.role}</p>
               <p className="mentor-univ"><FaGlobe /> {mentor.university}</p>
               {mentor.location && <p className="mentor-location"><FaMapMarkerAlt /> {mentor.location}</p>}
-              <span className="mentor-price"><FaMoneyBillWave /> £{mentor.price} / session</span>
+              {/* <span className="mentor-price"><FaMoneyBillWave /> £{mentor.price} / session</span> */}
               <div className="mentor-buttons">
                 <button onClick={() => navigate("/mentor_profile", { state: { mentor } })} className="btn outline">
                   View Profile

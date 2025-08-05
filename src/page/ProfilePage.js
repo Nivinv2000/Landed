@@ -1,52 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { auth, db, storage } from "../firebase";
+import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import {
-  doc,
-  setDoc,
-  getDoc
-} from "firebase/firestore";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from "firebase/storage";
+import { doc, getDoc ,collection ,getDocs } from "firebase/firestore";
 import "./ProfilePage.css";
 import Heading from "../components/heading";
 import Footer from "../components/footer";
 import { signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+
 
 export default function ProfilePage() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
   const [activeTab, setActiveTab] = useState("details");
+  const [bookings, setBookings] = useState([]);
   const [mentorDetails, setMentorDetails] = useState({
-    fullName: "",
-    jobTitle: "",
-    company: "",
-    university: "",
-    linkedin: "",
-    fieldsHelp: [],
-    bio: "",
-    whyMentor: "",
-    sessionPrice: "",
-    imageUrl: ""
+    imageUrl: "",
   });
 
-  // Wait for user authentication
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
-      if (firebaseUser) {
-        setUser(firebaseUser);
-      } else {
-        navigate("/"); // Redirect if not authenticated
-      }
-    });
-    return () => unsubscribe();
-  }, [navigate]);
+  // Auth check
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+    console.log("Authenticated user:", currentUser);
+  });
 
+  return () => unsubscribe();
+}, []);
+
+  // Fetch profile image URL
   useEffect(() => {
     const fetchMentorDetails = async () => {
       if (!user) return;
@@ -55,11 +37,7 @@ export default function ProfilePage() {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
-          setMentorDetails((prev) => ({
-            ...prev,
-            ...data,
-            fieldsHelp: Array.isArray(data.fieldsHelp) ? data.fieldsHelp : []
-          }));
+          setMentorDetails({ imageUrl: data.imageUrl || "" });
         }
       } catch (error) {
         console.error("Error fetching mentor data:", error);
@@ -68,45 +46,44 @@ export default function ProfilePage() {
     fetchMentorDetails();
   }, [user]);
 
-  const handleInputChange = (e) => {
-    setMentorDetails({ ...mentorDetails, [e.target.name]: e.target.value });
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!user) return;
-    setIsUploading(true);
+useEffect(() => {
+  const fetchBookings = async () => {
+    if (!user || !user.email) {
+      console.warn("No authenticated user or user email found");
+      return;
+    }
+
     try {
-      let imageUrl = mentorDetails.imageUrl || "";
-      if (profileImage) {
-        const imageRef = ref(storage, `mentor_profiles/${user.uid}`);
-        await uploadBytes(imageRef, profileImage);
-        imageUrl = await getDownloadURL(imageRef);
-      }
-      const docRef = doc(db, "mentors", user.uid);
-      await setDoc(docRef, {
-        uid: user.uid,
-        email: user.email,
-        ...mentorDetails,
-        imageUrl,
-        updatedAt: new Date()
+      // Fetch all bookings from Firestore
+      const bookingsSnapshot = await getDocs(collection(db, "bookings"));
+      const allBookings = bookingsSnapshot.docs.map(doc => doc.data());
+
+      console.log("✅ All bookings from Firestore:", allBookings);
+
+      // Filter bookings by mentor email
+      const filtered = allBookings.filter(b => {
+        console.log("🔍 Checking mentor email:", b.email);
+        return b.email === user.email;
       });
-      setMentorDetails((prev) => ({ ...prev, imageUrl }));
-      alert("Mentor profile saved successfully!");
-    } catch (error) {
-      console.error("Error updating mentor data:", error);
-      alert("Error updating profile.");
-    } finally {
-      setIsUploading(false);
+
+      console.log("🎯 Filtered bookings for current mentor:", filtered);
+      setBookings(filtered);
+    } catch (err) {
+      console.error("❌ Error fetching bookings:", err);
     }
   };
+
+  fetchBookings();
+}, [user]);
+
+
 
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
         localStorage.clear();
         sessionStorage.clear();
-
         if (window.indexedDB) {
           indexedDB.databases().then((databases) => {
             databases.forEach((db) => {
@@ -121,16 +98,6 @@ export default function ProfilePage() {
       });
   };
 
-  const fieldsOptions = [
-    "University/course selection",
-    "Job/internship applications",
-    "CV/LinkedIn review",
-    "Visa or immigration process",
-    "Interview prep",
-    "Industry insights"
-  ];
-
-  // 🟡 Show loading while waiting for user
   if (!user) {
     return (
       <div className="profile-wrapper">
@@ -146,8 +113,18 @@ export default function ProfilePage() {
         <center><h1>Profile</h1></center>
 
         <div className="tab-buttons">
-          <button className={activeTab === "details" ? "active" : ""} onClick={() => setActiveTab("details")}>Details</button>
-          <button className={activeTab === "booking" ? "active" : ""} onClick={() => setActiveTab("booking")}>Booking</button>
+          <button
+            className={activeTab === "details" ? "active" : ""}
+            onClick={() => setActiveTab("details")}
+          >
+            Details
+          </button>
+          <button
+            className={activeTab === "booking" ? "active" : ""}
+            onClick={() => setActiveTab("booking")}
+          >
+            Booking
+          </button>
         </div>
 
         {activeTab === "details" && (
@@ -159,26 +136,49 @@ export default function ProfilePage() {
                 <img
                   src={mentorDetails.imageUrl}
                   alt="Profile"
-                  style={{ width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }}
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
                 />
               )}
             </div>
           </>
         )}
 
-        {activeTab === "booking" && (
-          <div className="booking-section">
-            <h3>Sample Booking Slots</h3>
-            <ul>
-              <li>📅 12th Aug - 10:00 AM to 11:00 AM</li>
-              <li>📅 13th Aug - 2:00 PM to 3:00 PM</li>
-              <li>📅 15th Aug - 5:00 PM to 6:00 PM</li>
-            </ul>
-            <p>Note: This is sample data. Integrate your calendar for real slots.</p>
+   {activeTab === "booking" && (
+  <div className="booking-section">
+    <h3>Booking Requests</h3>
+    {bookings.length === 0 ? (
+      <p>No bookings found.</p>
+    ) : (
+      <div className="horizontal-booking-container">
+        {bookings.map((b, idx) => (
+          <div key={idx} className="horizontal-card">
+            <div className="card-left">
+              <h4>{b.name}</h4>
+              <p>{b.email}</p>
+              <p>{b.phone}</p>
+            </div>
+            <div className="card-middle">
+              <p><strong>Topic:</strong> {b.topic}</p>
+              <p><strong>Date:</strong> {b.date}</p>
+              <p><strong>Time:</strong> {b.time}</p>
+            </div>
+            <div className="card-right">
+              <p><strong>Session:</strong> {b.mentor?.sessionTitle || "-"}</p>
+              <p className="price-badge">₹{b.mentor?.price || 0}</p>
+            </div>
           </div>
-        )}
+        ))}
+      </div>
+    )}
+  </div>
+)}
 
-        {/* Logout button */}
+
         <div style={{ textAlign: "center", marginTop: "20px" }}>
           <button className="logout-button" onClick={handleLogout}>Logout</button>
         </div>
