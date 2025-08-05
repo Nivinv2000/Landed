@@ -54,6 +54,8 @@ const MentorProfile = () => {
               <a href={mentor.linkedin} target="_blank" rel="noopener noreferrer">
                 <button type="button" className="btn-outline full">LinkedIn Profile</button>
               </a>
+
+              
               <button type="button" className="btn-primary full"   onClick={() => setSelectedMentor(mentor)}>
                 📅 Book a Session
               </button>

@@ -4,8 +4,10 @@ import 'react-calendar/dist/Calendar.css';
 import "./MentorBookingModal.css";
 import { loadStripe } from "@stripe/stripe-js";
 import { useNavigate } from "react-router-dom";
+import { db } from "../firebase";
+import { collection, addDoc } from "firebase/firestore";
 
-const stripePromise = loadStripe("pk_live_51RDqWsEj3rV8qCmFHo87Xew52Vy973KhygZcHNnHkv5kz1GSIJsgLBclUFLQtmVNO74nOr5SBJN7T3PtYaXVa6ZA00M005LvuA");
+const stripePromise = loadStripe("pk_test_51RDqWsEj3rV8qCmFy6aIpDsI2APRYZPWc6rXQjEyx7z3KVHCAl1eWgSNEifMdGTA4iWc8GFzx5f6G0ao7joUZjlx00OwTHzY0S");
 
 export default function MentorBookingModal({ mentor, slot, onClose }) {
   const [step, setStep] = useState(1);
@@ -16,52 +18,70 @@ export default function MentorBookingModal({ mentor, slot, onClose }) {
   const [phone, setPhone] = useState("");
   const [topic, setTopic] = useState("");
   const [accepted, setAccepted] = useState(false);
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const timeSlots = ["14:30", "15:30", "16:30", "17:30", "18:30"];
+  const availableDates = mentor.availableSlots?.map(slot => slot.date) || [];
+  const formattedSelectedDate = selectedDate.toISOString().split("T")[0];
+
+  const selectedSlotObj = mentor.availableSlots?.find(
+    (slot) => slot.date === formattedSelectedDate
+  );
+
+  const timeSlots = selectedSlotObj?.times?.filter(Boolean) || [];
 
   const handleStripePayment = async () => {
-    setLoading(true); // Start loading indicator
+    setLoading(true);
+
+    const bookingData = {
+  name,
+  email,
+  phone,
+  topic,
+  acceptedTerms: accepted,
+  date: selectedDate.toISOString().split("T")[0], // Format: YYYY-MM-DD
+  time: selectedTime,
+  createdAt: new Date().toISOString(),
+  mentorId:  mentor.mentorId || "", // Adjust according to your data structure
+  mentor: {
+    name: mentor.name,
+    email: mentor.email,
+    imageUrl: mentor.imageUrl,
+    role: mentor.role,
+    price: Number(slot?.price || mentor.price),
+    sessionTitle: slot?.title || "",
+    sessionDescription: slot?.description || "",
+    duration: slot?.duration || "",
+  },
+};
+
 
     try {
-      const stripe = await stripePromise;
+      // await addDoc(collection(db, "bookings"), bookingData)
+          localStorage.setItem("bookingData", JSON.stringify(bookingData));
+;
 
-      const response = await fetch("https://strip-api-2a30.onrender.com/create-checkout-session", {
+      const stripe = await stripePromise;
+      const response = await fetch("https://landed-backend-772878553632.europe-west1.run.app/create-checkout-session", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-          topic,
-          date: selectedDate,
-          time: selectedTime,
-          mentor: {
-            name: mentor.name,
-            email: mentor.email, // ✅ include mentor email
-            price: Number(slot?.price || mentor.price),
-            sessionTitle: slot?.title || "",
-          },
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingData),
       });
 
       const session = await response.json();
 
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
-      });
+      const result = await stripe.redirectToCheckout({ sessionId: session.id });
+      if (!session.id) {
+  console.error("Session creation failed:", session.error);
+  return;
+}
 
-      if (result.error) {
-        alert(result.error.message);
-      }
+      if (result.error) alert(result.error.message);
     } catch (error) {
-      console.error("Error during payment:", error);
-      // Handle error state if needed
+      console.error("Error during booking/payment:", error);
+      alert("Something went wrong. Please try again.",error);
     } finally {
-      setLoading(false); // Stop loading indicator
+      setLoading(false);
     }
   };
 
@@ -91,8 +111,30 @@ export default function MentorBookingModal({ mentor, slot, onClose }) {
               </div>
 
               <h4>Select a Date & Time</h4>
-              <Calendar onChange={setSelectedDate} value={selectedDate} />
-              <div className="time-options">
+
+              <Calendar
+                onChange={setSelectedDate}
+                value={selectedDate}
+                tileDisabled={({ date }) => {
+                  const formatted = date.toISOString().split("T")[0];
+                  return !availableDates.includes(formatted);
+                }}
+                tileClassName={({ date, view }) => {
+                  if (view !== "month") return null;
+
+                  const formatted = date.toISOString().split("T")[0];
+                  const selectedFormatted = selectedDate?.toISOString().split("T")[0];
+
+                  if (formatted === selectedFormatted && availableDates.includes(formatted)) {
+                    return "highlight-selected";
+                  }
+
+                  return null;
+                }}
+              />
+
+              {timeSlots.length > 0 ? (
+               <div className="time-options">
                 {timeSlots.map((time, index) => (
                   <button
                     key={index}
@@ -103,6 +145,10 @@ export default function MentorBookingModal({ mentor, slot, onClose }) {
                   </button>
                 ))}
               </div>
+
+              ) : (
+                <p className="no-slots">No time slots available for this date.</p>
+              )}
 
               {selectedTime && (
                 <button onClick={() => setStep(2)} className="proceed-button">
@@ -116,39 +162,31 @@ export default function MentorBookingModal({ mentor, slot, onClose }) {
         {step === 2 && (
           <div className="booking-form">
             <h3>Enter your details</h3>
+            <input placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} />
+            <input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="tel" placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+            <textarea placeholder="What would you like the call to be about?" value={topic} onChange={(e) => setTopic(e.target.value)} />
+            <label className="terms" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <input
-              placeholder="Full Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              type="checkbox"
+              checked={accepted}
+              onChange={(e) => setAccepted(e.target.checked)}
             />
-            <input
-              type="email"
-              placeholder="Email Address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-            <textarea
-              placeholder="What would you like the call to be about?"
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
-            />
-            <label className="terms">
-              <input
-                type="checkbox"
-                checked={accepted}
-                onChange={(e) => setAccepted(e.target.checked)}
-              />
-              I agree to the terms and conditions
-            </label>
+            <span>
+              I agree to the terms and conditions (
+              <span
+                onClick={() => alert("Your popup terms and conditions content goes here.")}
+                style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
+              >
+                Read
+              </span>
+              )
+            </span>
+          </label>
+
             <button
               className="continue-button"
-              disabled={!accepted || !name || !email || !phone || loading} // Disable button when loading
+              disabled={!accepted || !name || !email || !phone || loading}
               onClick={handleStripePayment}
             >
               {loading ? "Processing..." : "Continue to Pay"}

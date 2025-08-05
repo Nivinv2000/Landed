@@ -180,3 +180,30 @@
 .full {
   width: 100%;
 }
+
+.time-slot {
+  padding: 10px 16px;
+  margin: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f4f4f4;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.time-slot:hover {
+  background-color: #ddd;
+}
+
+.time-slot.selected {
+  background-color: yellow;
+  color: #000;
+  font-weight: bold;
+  border: 2px solid #aaa;
+}
+
+.highlight-selected {
+  background-color: yellow !important;
+  color: black !important;
+  border-radius: 6px;
+}
