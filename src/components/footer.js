@@ -15,7 +15,7 @@ export default function Footer() {
       <div className="footer-content">
         {/* Brand */}
         <div className="footer-brand">
-          <h3>GetLanded 🌎</h3>
+          <h3>GetLanded</h3>
           <p>Mentorship for students abroad, by students who've done it.</p>
         </div>
 
@@ -23,9 +23,9 @@ export default function Footer() {
         <div className="footer-social">
           <h4>CONNECT</h4>
           <div className="social-icons">
-            <a href="#" aria-label="LinkedIn"><FaLinkedin /></a>
-            <a href="#" aria-label="Instagram"><FaInstagram /></a>
-            <a href="#" aria-label="YouTube"><FaYoutube /></a>
+            <a href="https://www.linkedin.com/company/getlandedio/posts/?feedView=all" aria-label="LinkedIn"><FaLinkedin /></a>
+            <a href="https://www.instagram.com/getlanded.io" aria-label="Instagram"><FaInstagram /></a>
+            <a href="https://www.instagram.com/getlanded.io" aria-label="YouTube"><FaYoutube /></a>
           </div>
         </div>
 
@@ -48,3 +48,4 @@ export default function Footer() {
     </footer>
   );
 }
+
