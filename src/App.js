@@ -17,6 +17,12 @@ import SuccessPage from "./page/success";
 import CancelPage from "./page/cancel";
 import ProblemPage from "./page/problem";
 import CommunityPage from "./page/CommunityPage";
+import MentorLogin from "./Mentor/MentorLogin";
+import SidebarLayout from "./Mentor/SidebarLayout";
+import Dashboard from "./Mentor/innerscreen/Dashboard";
+import AddSchedulePage from "./Mentor/innerscreen/AddSchedulePage";
+import ProfileDetails from "./Mentor/innerscreen/ProfileDetails";
+import CheckBookings from "./Mentor/innerscreen/CheckBookings";
 
 function App() {
   return (
@@ -39,8 +45,13 @@ function App() {
         <Route path="/cancel" element={<CancelPage />} />
         <Route path="/problem" element={<ProblemPage />} />
         <Route path="/CommunityPage" element={<CommunityPage />} />
-
-
+        <Route path="/mentor-login" element={<MentorLogin />} />
+        <Route path="/dashboard" element={<SidebarLayout />}>
+        <Route path="home" element={<Dashboard/>} />
+        <Route path="add-schedule" element={<AddSchedulePage />} />
+          <Route path="bookings" element={<CheckBookings />} />
+           <Route path="profile" element={<ProfileDetails />} /> 
+        </Route>
 
 
 
