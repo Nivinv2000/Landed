@@ -10,7 +10,7 @@ import {
   updateProfile,
   signOut
 } from "firebase/auth";
-import { sendPasswordResetEmail } from "firebase/auth";
+import { sendPasswordResetEmail,GoogleAuthProvider, signInWithPopup  } from "firebase/auth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { db, storage } from '../firebase'; // your Firebase config
 import { collection, addDoc } from 'firebase/firestore';
@@ -49,6 +49,31 @@ const [showMentorModal, setShowMentorModal] = useState(false);
     profileImage: null,
   });
   const [loading, setLoading] = useState(false);
+
+
+  const handleGoogleSignIn = async () => {
+  const provider = new GoogleAuthProvider();
+
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    console.log("✅ Google sign-in success:", user);
+
+    // Optional: If it's sign-up mode, store user's name or extra info
+    if (!isLoginMode) {
+      // You can also store additional user data in Firestore here if needed
+    }
+
+    setIsLoggedIn(true);
+    setFormData({ name: "", email: "", password: "" });
+    setShowLoginModal(false);
+    navigate("/profile"); // or wherever you want
+  } catch (error) {
+    console.error("❌ Google Sign-In Error:", error);
+    alert("Google Sign-In failed: " + error.message);
+  }
+};
 
 
   const handleCheckbox = (e) => {
@@ -95,6 +120,7 @@ const handleSubmit = async () => {
     await addDoc(collection(db, 'mentor_profile'), {
       fullName: form.fullName,
       jobTitle: form.jobTitle,
+      email: auth.currentUser?.email || "", // 
       company: form.company,
       universityDegree: form.universityDegree,
       linkedin: form.linkedin,
@@ -298,98 +324,116 @@ const handleForgotPassword = () => {
         )}
       </nav>
 
-      {showLoginModal && (
-        <div className="login-modal-overlay">
-          <div className="login-modal">
-            <button className="close-btn" onClick={() => setShowLoginModal(false)}>×</button>
+{showLoginModal && (
+  <div className="login-modal-overlay">
+    <div className="login-modal">
+      <button className="close-btn" onClick={() => setShowLoginModal(false)}>×</button>
 
-            <div className="login-content">
-              <div className="login-left">
-                <h2>{isLoginMode ? "Welcome Back to" : "Join"} <br />Landed</h2>
-                <div className="green-line"></div>
-                <p>{isLoginMode ? "Sign in to continue to your account." : "Create an account to get started."}</p>
-              </div>
-
-              <div className="login-right">
-                {/* Admin button removed */}
-                {/* <div className="divider">
-                  <hr />
-                  <span>or</span>
-                  <hr />
-                </div> */}
-
-                {!isLoginMode && (
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="login-input"
-                  />
-                )}
-
-                <input
-                  type="email"
-                  placeholder="Email address"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="login-input"
-                />
-
-                    <div className="password-wrapper">
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                        className="login-input"
-                      />
-                      <span
-                        className="toggle-password"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                      </span>
-                    </div>
-
-
-               {isLoginMode && (
-                      <>
-                        <label className="checkbox-label">
-                          <input type="checkbox" />
-                          Keep me signed in until I sign out
-                        </label>
-
-                        <p
-                          className="forgot-password-link"
-                          onClick={handleForgotPassword}
-                          style={{ cursor: "pointer", color: "#007bff", marginTop: "8px", fontSize: "14px" }}
-                        >
-                          Forgot Password?
-                        </p>
-                      </>
-                    )}
-
-
-                <button className="sign-in-btn" onClick={handleAuth}>
-                  {isLoginMode ? "Sign In" : "Sign Up"}
-                </button>
-                
-
-                <p className="signup-text">
-                  {isLoginMode ? "Not a member yet?" : "Already have an account?"}
-                  <span
-                    className="signup-link"
-                    onClick={() => setIsLoginMode(!isLoginMode)}
-                  >
-                    {isLoginMode ? " Sign Up." : " Log In."}
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
+      <div className="login-content">
+        <div className="login-left">
+          <h2>{isLoginMode ? "Welcome Back to" : "Join"} <br />Landed</h2>
+          <div className="green-line"></div>
+          <p>{isLoginMode ? "Sign in to continue to your account." : "Create an account to get started."}</p>
         </div>
-      )}
+
+        <div className="login-right">
+          {!isLoginMode && (
+            <input
+              type="text"
+              placeholder="Name"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="login-input"
+            />
+          )}
+
+          <input
+            type="email"
+            placeholder="Email address"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            className="login-input"
+          />
+
+          <div className="password-wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              className="login-input"
+            />
+            <span
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+
+          {isLoginMode && (
+            <>
+              <label className="checkbox-label">
+                <input type="checkbox" />
+                Keep me signed in until I sign out
+              </label>
+
+              <p
+                className="forgot-password-link"
+                onClick={handleForgotPassword}
+                style={{ cursor: "pointer", color: "#007bff", marginTop: "8px", fontSize: "14px" }}
+              >
+                Forgot Password?
+              </p>
+            </>
+          )}
+
+          <button className="sign-in-btn" onClick={handleAuth}>
+            {isLoginMode ? "Sign In" : "Sign Up"}
+          </button>
+
+          {/* Google Sign-In Button */}
+          <div
+            className="google-sign-in-btn"
+            onClick={handleGoogleSignIn}
+            style={{
+              marginTop: "12px",
+              padding: "10px",
+              backgroundColor: "#fff",
+              color: "#000",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              textAlign: "center",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "10px"
+            }}
+          >
+            <img
+              src="https://developers.google.com/identity/images/g-logo.png"
+              alt="Google"
+              style={{ width: 20, height: 20 }}
+            />
+            Continue with Google
+          </div>
+
+          <p className="signup-text">
+            {isLoginMode ? "Not a member yet?" : "Already have an account?"}
+            <span
+              className="signup-link"
+              onClick={() => setIsLoginMode(!isLoginMode)}
+            >
+              {isLoginMode ? " Sign Up." : " Log In."}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
     </header>
   );
 }
