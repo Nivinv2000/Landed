@@ -125,6 +125,16 @@ useEffect(() => {
           >
             Booking
           </button>
+
+          <button
+          className={activeTab === "Mentor" ? "active" : ""}
+          onClick={() => {
+            setActiveTab("Mentor");
+            navigate("/mentor-login");
+          }}
+        >
+          Mentor Login
+        </button>
         </div>
 
         {activeTab === "details" && (
