@@ -87,6 +87,7 @@ const AddSchedule = () => {
           availableSlots: data.availableSlots || [],
           whyMentor: data.mentorReason || "",
           helpWith: data.fieldsHelpWith?.join(", ") || "",
+          price:data.sessionPrice || ""
         }));
       }
     } catch (err) {
@@ -237,3 +238,4 @@ return (
 }
 
 export default AddSchedule;
+
