@@ -146,11 +146,11 @@ export default function LandingPage() {
             ))}
           </div>
 
-          <div className="slider-controls">
+          {/* <div className="slider-controls">
             <button className="carousel-pause" onClick={() => setIsPaused((p) => !p)}>
               {isPaused ? <FaPlay /> : <FaPause />}
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
 

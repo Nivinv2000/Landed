@@ -179,7 +179,7 @@ useEffect(() => {
             </div>
             <div className="card-right">
               <p><strong>Session:</strong> {b.mentor?.sessionTitle || "-"}</p>
-              <p className="price-badge">₹{b.mentor?.price || 0}</p>
+              <p className="price-badge"> £{b.mentor?.price || 0}</p>
             </div>
           </div>
         ))}
