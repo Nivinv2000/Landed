@@ -196,19 +196,22 @@ useEffect(() => {
                 </div>
               )}
 
-              {mentor.availableSlots && mentor.availableSlots.length > 0 && (
-                <div>
-                  <strong>Available Slots:</strong>
-                  <ul>
-                    {mentor.availableSlots.map((slot, idx) => (
-                      <li key={idx}>
-                        <strong>{slot.date}:</strong>{" "}
-                        {slot.times.join(", ")}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+            {mentor.availableSlots && mentor.availableSlots.length > 0 ? (
+  <div>
+    <strong>Available Slots:</strong>
+    <ul>
+      {mentor.availableSlots.map((slot, idx) => (
+        <li key={idx}>
+          <strong>{slot.date}:</strong> {slot.times.join(", ")}
+        </li>
+      ))}
+    </ul>
+  </div>
+) : (
+  <p style={{ color: "red", fontStyle: "italic" }}>
+    Time and date are not added. Please click <strong>Edit</strong> and create.
+  </p>
+)}
 
               <button className="btn edit-btn" onClick={() => setEditMode(true)}>✏️ Edit Profile</button>
             </>

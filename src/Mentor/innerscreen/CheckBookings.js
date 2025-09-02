@@ -92,7 +92,7 @@ export default function CheckBookings() {
                 <strong>Time:</strong> {booking.time}
               </p>
               <p>
-                <strong>Price:</strong> ₹{booking.mentor?.price || 0}
+                <strong>Price:</strong>  £{booking.mentor?.price || 0}
               </p>
               <p>
                 <strong>Status:</strong> {booking.status || "Pending"}

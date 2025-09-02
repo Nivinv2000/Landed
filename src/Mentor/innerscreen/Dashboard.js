@@ -116,14 +116,14 @@ export default function Dashboard() {
         )}
       </div>
 
-      <div className="dashboard-section">
+      {/* <div className="dashboard-section">
         <h3>⚡ Quick Actions</h3>
         <ul className="quick-actions">
           <li><a href="/profile">📝 Edit Profile</a></li>
           <li><a href="/check-bookings">📖 View Bookings</a></li>
           <li><a href="/availability">📆 Set Availability</a></li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 }
