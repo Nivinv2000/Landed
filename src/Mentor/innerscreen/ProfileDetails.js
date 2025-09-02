@@ -11,37 +11,39 @@ export default function ProfileDetails() {
 
   const mentorId = localStorage.getItem("mentorId");
 
-useEffect(() => {
-  const fetchMentorProfile = async () => {
-    if (!mentorId) return;
-    try {
-      const docRef = doc(db, "mentor_profile", mentorId);
-      const snapshot = await getDoc(docRef);
-      if (snapshot.exists()) {
-        const data = snapshot.data();
+  useEffect(() => {
+    const fetchMentorProfile = async () => {
+      if (!mentorId) return;
+      try {
+        const docRef = doc(db, "mentor_profile", mentorId);
+        const snapshot = await getDoc(docRef);
+        if (snapshot.exists()) {
+          const data = snapshot.data();
 
-        // 🚫 Skip rendering if status is 'finished'
-        if (data.Status === "finished") {
-          setMentor(null);  // this ensures it doesn't render
-          return;
+          if (data.Status === "finished") {
+            setMentor(null);
+            return;
+          }
+
+          setMentor(data);
+          setFormData({
+            ...data,
+            availableSlots: data.availableSlots || [{ date: "", times: [""] }],
+            languages: data.languages || "",
+            location: data.location || "",
+            education: data.education || "",
+            experience: data.experience || "",
+          });
         }
-
-        setMentor(data);
-        setFormData({
-          ...data,
-          availableSlots: data.availableSlots || [{ date: "", times: [""] }],
-        });
+      } catch (err) {
+        console.error("Failed to fetch mentor profile:", err);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error("Failed to fetch mentor profile:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  fetchMentorProfile();
-}, [mentorId]);
-
+    fetchMentorProfile();
+  }, [mentorId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -122,6 +124,19 @@ useEffect(() => {
               <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Bio" />
               <textarea name="mentorReason" value={formData.mentorReason} onChange={handleChange} placeholder="Why I'm a Mentor" />
 
+              {/* ✅ New fields */}
+              <input name="languages" value={formData.languages} onChange={handleChange} placeholder="Languages (comma separated)" />
+              <input name="location" value={formData.location} onChange={handleChange} placeholder="Location" />
+              <input name="education" value={formData.education} onChange={handleChange} placeholder="Education" />
+              <input
+                type="number"
+                name="experience"
+                value={formData.experience}
+                onChange={handleChange}
+                placeholder="Years of Experience"
+                min="0"
+              />
+
               <h4>Available Slots</h4>
               {formData.availableSlots.map((slot, index) => (
                 <div key={index} className="slot-group">
@@ -185,6 +200,12 @@ useEffect(() => {
               <p><strong>Bio:</strong> {mentor.bio}</p>
               <p><strong>Why I'm a Mentor:</strong> {mentor.mentorReason}</p>
 
+              {/* ✅ New fields display */}
+              <p><strong>Languages:</strong> {mentor.languages}</p>
+              <p><strong>Location:</strong> {mentor.location}</p>
+              <p><strong>Education:</strong> {mentor.education}</p>
+              <p><strong>Experience:</strong> {mentor.experience}</p>
+
               {mentor.fieldsHelpWith && (
                 <div>
                   <strong>Fields I Can Help With:</strong>
@@ -196,22 +217,22 @@ useEffect(() => {
                 </div>
               )}
 
-            {mentor.availableSlots && mentor.availableSlots.length > 0 ? (
-  <div>
-    <strong>Available Slots:</strong>
-    <ul>
-      {mentor.availableSlots.map((slot, idx) => (
-        <li key={idx}>
-          <strong>{slot.date}:</strong> {slot.times.join(", ")}
-        </li>
-      ))}
-    </ul>
-  </div>
-) : (
-  <p style={{ color: "red", fontStyle: "italic" }}>
-    Time and date are not added. Please click <strong>Edit</strong> and create.
-  </p>
-)}
+              {mentor.availableSlots && mentor.availableSlots.length > 0 ? (
+                <div>
+                  <strong>Available Slots:</strong>
+                  <ul>
+                    {mentor.availableSlots.map((slot, idx) => (
+                      <li key={idx}>
+                        <strong>{slot.date}:</strong> {slot.times.join(", ")}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <p style={{ color: "red", fontStyle: "italic" }}>
+                  Time and date are not added. Please click <strong>Edit</strong> and create.
+                </p>
+              )}
 
               <button className="btn edit-btn" onClick={() => setEditMode(true)}>✏️ Edit Profile</button>
             </>
