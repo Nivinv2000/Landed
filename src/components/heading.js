@@ -47,6 +47,10 @@ const [showMentorModal, setShowMentorModal] = useState(false);
     fieldsHelpWith: [],
     bio:'',
     profileImage: null,
+    languages: '',      // NEW
+    location: '',       // NEW
+    education: '',      // NEW (separate from universityDegree)
+    experience: '',     // NEW
   });
   const [loading, setLoading] = useState(false);
 
@@ -98,7 +102,7 @@ const handleSubmit = async () => {
     !form.mentorReason ||
     !form.sessionPrice ||
     !form.bio||
-    !form.profileImage
+    !form.profileImage 
   ) {
     alert("⚠️ Please fill all the required fields before submitting.");
     return;
@@ -129,6 +133,10 @@ const handleSubmit = async () => {
       sessionPrice: form.sessionPrice,
       profileImageURL: imageURL,
       bio:form.bio,
+      languages: form.languages,    // NEW
+      location: form.location,      // NEW
+      education: form.education,    // NEW
+      experience: form.experience,  // NEW
       createdAt: new Date(),
       Status: "pending",
     });
@@ -237,59 +245,94 @@ const handleForgotPassword = () => {
             </Link>
 
             <button
-  className="btn nav-btn"
-  style={{ color: "white" }}
-  onClick={() => setShowMentorModal(true)}
->
-  Be Our Mentor
-</button>
+          className="btn nav-btn"
+          style={{ color: "white" }}
+          onClick={() => setShowMentorModal(true)}
+        >
+          Be Our Mentor
+        </button>
 
 
-{showMentorModal && (
-  <div className="login-modal-overlay">
-    <div className="login-modal">
-      <button className="close-btn" onClick={() => setShowMentorModal(false)}>×</button>
-      <div className="form-container">
-        <h2>Become a Mentor</h2>
-        <input type="file" onChange={(e) => setForm({ ...form, profileImage: e.target.files[0] })} />
-        <input placeholder="Full Name" onChange={(e) => setForm({ ...form, fullName: e.target.value })} />
-        <input placeholder="Job Title" onChange={(e) => setForm({ ...form, jobTitle: e.target.value })} />
-        <input placeholder="Company" onChange={(e) => setForm({ ...form, company: e.target.value })} />
-        <input placeholder="Your University & Degree" onChange={(e) => setForm({ ...form, universityDegree: e.target.value })} />
-        <input placeholder="Linkedin Profile Link" onChange={(e) => setForm({ ...form, linkedin: e.target.value })} />
+        {showMentorModal && (
+          <div className="login-modal-overlay">
+            <div className="login-modal">
+              <button className="close-btn" onClick={() => setShowMentorModal(false)}>×</button>
+              <div className="form-container">
+                <h2>Become a Mentor</h2>
+                <input type="file" onChange={(e) => setForm({ ...form, profileImage: e.target.files[0] })} />
+                <input placeholder="Full Name" onChange={(e) => setForm({ ...form, fullName: e.target.value })} />
+                <input placeholder="Job Title" onChange={(e) => setForm({ ...form, jobTitle: e.target.value })} />
+                <input placeholder="Company" onChange={(e) => setForm({ ...form, company: e.target.value })} />
+                <input placeholder="Your University & Degree" onChange={(e) => setForm({ ...form, universityDegree: e.target.value })} />
+                <input placeholder="Linkedin Profile Link" onChange={(e) => setForm({ ...form, linkedin: e.target.value })} />
 
-<div className="checkboxes">
-  <h3 className="checkbox-title">Fields You Can Help With</h3>
+        <div className="checkboxes">
+          <h3 className="checkbox-title">Fields You Can Help With</h3>
 
-  <label className="checkbox-item">
-    <input type="checkbox" value="University/course selection" onChange={handleCheckbox} />
-    University/course selection
-  </label>
-  <label className="checkbox-item">
-    <input type="checkbox" value="Job/internship applications" onChange={handleCheckbox} />
-    Job/internship applications
-  </label>
-  <label className="checkbox-item">
-    <input type="checkbox" value="CV/LinkedIn review" onChange={handleCheckbox} />
-    CV/LinkedIn review
-  </label>
-  <label className="checkbox-item">
-    <input type="checkbox" value="Visa or immigration process" onChange={handleCheckbox} />
-    Visa or immigration process
-  </label>
-  <label className="checkbox-item">
-    <input type="checkbox" value="Interview prep" onChange={handleCheckbox} />
-    Interview prep
-  </label>
-  <label className="checkbox-item">
-    <input type="checkbox" value="Industry insights" onChange={handleCheckbox} />
-    Industry insights
-  </label>
-</div>
+          <label className="checkbox-item">
+            <input type="checkbox" value="University/course selection" onChange={handleCheckbox} />
+            University/course selection
+          </label>
+          <label className="checkbox-item">
+            <input type="checkbox" value="Job/internship applications" onChange={handleCheckbox} />
+            Job/internship applications
+          </label>
+          <label className="checkbox-item">
+            <input type="checkbox" value="CV/LinkedIn review" onChange={handleCheckbox} />
+            CV/LinkedIn review
+          </label>
+          <label className="checkbox-item">
+            <input type="checkbox" value="Visa or immigration process" onChange={handleCheckbox} />
+            Visa or immigration process
+          </label>
+          <label className="checkbox-item">
+            <input type="checkbox" value="Interview prep" onChange={handleCheckbox} />
+            Interview prep
+          </label>
+          <label className="checkbox-item">
+            <input type="checkbox" value="Industry insights" onChange={handleCheckbox} />
+            Industry insights
+          </label>
+
+        </div>
+        <input
+          placeholder="Languages (e.g. English, Hindi)"
+          onChange={(e) => setForm({ ...form, languages: e.target.value })}
+        />
+
+        <input
+          placeholder="Location (City, Country)"
+          onChange={(e) => setForm({ ...form, location: e.target.value })}
+        />
+
+        <input
+          placeholder="Education (e.g. MBA, PhD, Certifications)"
+          onChange={(e) => setForm({ ...form, education: e.target.value })}
+        />
+
+       <input
+        type="number"
+        placeholder="Years of Experience (e.g. 5)"
+        min="0"
+        step="1"
+        value={form.experience}
+        onChange={(e) => setForm({ ...form, experience: e.target.value.replace(/\D/, '') })}
+      />
+
+
 
         <textarea placeholder="Bio" onChange={(e) => setForm({ ...form, bio: e.target.value })} />
         <textarea placeholder="Why do you mentor?" onChange={(e) => setForm({ ...form, mentorReason: e.target.value })} />
-        <input placeholder="Your Session Price (GBP)" onChange={(e) => setForm({ ...form, sessionPrice: e.target.value })} />
+        <input
+          type="number"
+          placeholder="Your Session Price (GBP)"
+          min="0"
+          step="1"
+          value={form.sessionPrice}
+          onChange={(e) =>
+            setForm({ ...form, sessionPrice: e.target.value.replace(/\D/, '') })
+          }
+        />
 
         <button className="btn nav-btn" style={{ color: "white" }} onClick={handleSubmit}>
               {loading ? (
