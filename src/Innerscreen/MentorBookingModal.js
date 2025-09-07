@@ -22,7 +22,7 @@ export default function MentorBookingModal({ mentor, slot, onClose }) {
   const navigate = useNavigate();
 
   const availableDates = mentor.availableSlots?.map(slot => slot.date) || [];
-  const formattedSelectedDate = selectedDate.toISOString().split("T")[0];
+  const formattedSelectedDate = selectedDate.toLocaleDateString("en-CA");;
 
   const selectedSlotObj = mentor.availableSlots?.find(
     (slot) => slot.date === formattedSelectedDate
@@ -42,7 +42,7 @@ export default function MentorBookingModal({ mentor, slot, onClose }) {
   date: selectedDate.toISOString().split("T")[0], // Format: YYYY-MM-DD
   time: selectedTime,
   createdAt: new Date().toISOString(),
-  mentorId:  mentor.mentorId || "", // Adjust according to your data structure
+  mentorId:  mentor.id || "", // Adjust according to your data structure
   mentor: {
     name: mentor.fullName,
     email: mentor.email,
@@ -84,6 +84,9 @@ export default function MentorBookingModal({ mentor, slot, onClose }) {
       setLoading(false);
     }
   };
+const formatDate = (date) => {
+  return date.toLocaleDateString("en-CA"); // YYYY-MM-DD format (local timezone)
+};
 
   return (
     <div className="mentor-modal-overlay">
@@ -116,14 +119,14 @@ export default function MentorBookingModal({ mentor, slot, onClose }) {
                 onChange={setSelectedDate}
                 value={selectedDate}
                 tileDisabled={({ date }) => {
-                  const formatted = date.toISOString().split("T")[0];
+                  const formatted = date.toLocaleDateString("en-CA");
                   return !availableDates.includes(formatted);
                 }}
                 tileClassName={({ date, view }) => {
                   if (view !== "month") return null;
 
-                  const formatted = date.toISOString().split("T")[0];
-                  const selectedFormatted = selectedDate?.toISOString().split("T")[0];
+                  const formatted = date.toLocaleDateString("en-CA");
+                  const selectedFormatted = selectedDate?.toLocaleDateString("en-CA");
 
                   if (formatted === selectedFormatted && availableDates.includes(formatted)) {
                     return "highlight-selected";
@@ -132,6 +135,7 @@ export default function MentorBookingModal({ mentor, slot, onClose }) {
                   return null;
                 }}
               />
+              
 
               {timeSlots.length > 0 ? (
                <div className="time-options">
