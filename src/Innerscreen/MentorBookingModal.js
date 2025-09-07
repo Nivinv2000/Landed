@@ -44,11 +44,11 @@ export default function MentorBookingModal({ mentor, slot, onClose }) {
   createdAt: new Date().toISOString(),
   mentorId:  mentor.mentorId || "", // Adjust according to your data structure
   mentor: {
-    name: mentor.name,
+    name: mentor.fullName,
     email: mentor.email,
-    imageUrl: mentor.imageUrl,
-    role: mentor.role,
-    price: Number(slot?.price || mentor.price),
+    imageUrl: mentor.profileImageURL,
+    role: mentor.jobTitle,
+    price: Number(slot?.price || slot.price),
     sessionTitle: slot?.title || "",
     sessionDescription: slot?.description || "",
     duration: slot?.duration || "",
@@ -93,10 +93,10 @@ export default function MentorBookingModal({ mentor, slot, onClose }) {
         {step === 1 && (
           <div className="slot-layout">
             <div className="slot-left">
-              <img src={mentor.imageUrl} alt={mentor.name} />
-              <h3>{mentor.name}</h3>
-              <p>{mentor.role}</p>
-              <h4>£{mentor.price} / session</h4>
+              <img src={mentor.profileImageURL} alt={mentor.fullName} />
+              <h3>{mentor.fullName}</h3>
+              <p>{mentor.jobTitle}</p>
+              <h4>£{mentor.sessionPrice} / session</h4>
             </div>
 
             <div className="slot-right">
