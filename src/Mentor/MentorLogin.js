@@ -211,12 +211,19 @@ import React, { useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import SidebarLayout from "./SidebarLayout";
+import { useNavigate } from "react-router-dom";
+
 
 export default function MentorLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+   const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate("/"); // navigate to home
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -263,7 +270,17 @@ export default function MentorLogin() {
         <p style={styles.brandSubtitle}>
           Empower students, shape careers, and grow together 
         </p>
-        <img src="/logo192.png" alt="Mentorship" style={styles.illustration} />
+        <img
+        src="/logo192.png"
+        alt="Mentorship"
+        style={styles.illustration}
+        onClick={goHome}
+      />
+      <h1 style={{ cursor: "pointer", fontSize: "24px", fontWeight: "bold",color:"#fff", marginTop:"20px" }}
+        onClick={goHome}
+      >        GO Back
+      </h1>
+
       </div>
 
       {/* Right panel (login form) */}
@@ -301,6 +318,15 @@ export default function MentorLogin() {
 }
 
 const styles = {
+     illustration: {
+      width: "60px",
+      cursor: "pointer",
+    },
+    brandTitle: {
+      cursor: "pointer",
+      fontSize: "24px",
+      fontWeight: "bold",
+    },
   page: {
     display: "flex",
     height: "100vh",
