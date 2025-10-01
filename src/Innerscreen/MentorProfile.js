@@ -79,9 +79,15 @@ const MentorProfile = () => {
                   "30-minute personal session to discuss careers, education, or goals"}
               </p>
               <h3>£{mentor.sessionPrice}</h3>
-              <a href={mentor.linkedin} target="_blank" rel="noopener noreferrer">
-                <button type="button" className="btn-outline full">LinkedIn Profile</button>
+              <a href={`https://${mentor.linkedin.replace(/^https?:\/\//, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button type="button" className="btn-outline full">
+                  LinkedIn Profile
+                </button>
               </a>
+
 
               {/* 🔹 Book button with mentor check */}
               <button
